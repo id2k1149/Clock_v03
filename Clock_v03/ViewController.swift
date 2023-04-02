@@ -9,9 +9,18 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet var squareView: UIView!
+    @IBOutlet var circleView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        squareView.layer.cornerRadius = squareView.frame.width / 4
+        
+        circleView.layer.cornerRadius = circleView.frame.width / 2
+        
+        
+        
     }
 
 
