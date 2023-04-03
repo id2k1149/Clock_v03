@@ -23,7 +23,6 @@ class ViewController: UIViewController {
         addHourHand(to: circleView)
         addMinuteHand(to: circleView)
         addSecondHand(to: circleView)
-        
         addCenterCircles(to: circleView)
 
     }
@@ -34,14 +33,6 @@ extension UIViewController {
         
         let labelSize = CGSize(width: 50, height: 50)
         let circleRadius = circleView.frame.width/2 - labelSize.width/2 - 10
-        
-//        let circleCenter = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
-//        let circleView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: circleRadius*2, height: circleRadius*2)))
-//        circleView.center = circleCenter
-//        circleView.layer.cornerRadius = circleRadius
-//        circleView.layer.borderWidth = 2
-//        circleView.layer.borderColor = UIColor.black.cgColor
-//        view.addSubview(circleView)
                                  
         for i in 0..<12 {
             let label = UILabel(frame: CGRect(origin: .zero, size: labelSize))
@@ -72,29 +63,6 @@ extension UIViewController {
             circleView.addSubview(mark)
         }
     }
-    /*
-    func addHourHand(to circleView: UIView, hour: CGFloat) {
-        let centerPoint = CGPoint(x: circleView.bounds.midX, y: circleView.bounds.midY)
-        let hourRadius = circleView.frame.width/3
-        
-        // Create a path for the hour hand
-        let hourPath = UIBezierPath()
-        hourPath.move(to: centerPoint)
-        let hourAngle = hour/12.0 * 2.0 * CGFloat.pi - CGFloat.pi/2.0
-        let hourEndPoint = CGPoint(x: cos(hourAngle) * hourRadius + centerPoint.x, y: sin(hourAngle) * hourRadius + centerPoint.y)
-        hourPath.addLine(to: hourEndPoint)
-        
-        // Create a shape layer for the hour hand
-        let hourLayer = CAShapeLayer()
-        hourLayer.path = hourPath.cgPath
-        hourLayer.lineWidth = 6
-        hourLayer.strokeColor = UIColor.black.cgColor
-        hourLayer.lineCap = .round
-        
-        // Add the hour layer to the circle view layer
-        circleView.layer.addSublayer(hourLayer)
-    }
-     */
     
     func addHourHand(to circleView: UIView) {
         let centerPoint = CGPoint(x: circleView.bounds.midX, y: circleView.bounds.midY)
@@ -193,8 +161,8 @@ extension UIViewController {
             newSecondPath.move(to: centerPoint)
             newSecondPath.addLine(to: secondEndPoint)
             newSecondPath.move(to: centerPoint)
-            let oppositeEndPoint = CGPoint(x: cos(secondAngle + .pi) * secondRadius/5 + centerPoint.x,
-                                           y: sin(secondAngle + .pi) * secondRadius/5 + centerPoint.y)
+            let oppositeEndPoint = CGPoint(x: cos(secondAngle + .pi) * secondRadius/6 + centerPoint.x,
+                                           y: sin(secondAngle + .pi) * secondRadius/6 + centerPoint.y)
             newSecondPath.addLine(to: oppositeEndPoint)
             secondLayer.path = newSecondPath.cgPath
         }
@@ -239,7 +207,6 @@ extension UIViewController {
         circleView.layer.borderColor = UIColor.black.cgColor
         view.addSubview(circleView)
         
-
         let orangeCircle = UIView(frame: CGRect(origin: .zero,
                                                 size: CGSize(width: circleRadius*2 - 6,
                                                              height: circleRadius*2 - 6)))
@@ -256,84 +223,4 @@ extension UIViewController {
         whiteCircle.center = circleCenter
         view.addSubview(whiteCircle)
     }
-
-        
-    /*
-    func getCurrentMinuteAngle() -> CGFloat {
-        let calendar = Calendar.current
-        let minute = CGFloat(calendar.component(.minute, from: Date()))
-        let minuteAngle = minute / 30.0 * CGFloat.pi
-        return minuteAngle
-    }
-
-
-    func getCurrentHourAngle() -> CGFloat {
-        let calendar = Calendar.current
-        let hour = CGFloat(calendar.component(.hour, from: Date()))
-        let minute = CGFloat(calendar.component(.minute, from: Date()))
-        let hourAngle = (hour + minute/60.0) / 12.0 * 2.0 * CGFloat.pi - CGFloat.pi/2.0
-        return hourAngle
-    }
-    
-    func getCurrentAngle(for component: Calendar.Component, in calendar: Calendar) -> CGFloat {
-        let now = Date()
-        let componentValue = CGFloat(calendar.component(component, from: now))
-        let totalValue: CGFloat
-        let max: CGFloat
-        
-        switch component {
-        case .hour:
-            totalValue = 12.0
-            max = 24.0
-        case .minute:
-            totalValue = 60.0
-            max = 60.0
-        case .second:
-            totalValue = 60.0
-            max = 60.0
-        default:
-            totalValue = 1.0
-            max = 1.0
-        }
-        
-        let angle = 2.0 * CGFloat.pi * (componentValue / totalValue) - CGFloat.pi / 2.0
-        let offset = 2.0 * CGFloat.pi * ((componentValue / max) / totalValue)
-        return angle + offset
-    }
-     */
-    
-    /*******
-    func getCurrentAngle(for component: Calendar.Component, in calendar: Calendar) -> CGFloat {
-        let now = Date()
-        let components = calendar.dateComponents([.hour, .minute, .second, .nanosecond], from: now)
-        var componentValue: CGFloat = 0.0
-        var totalValue: CGFloat = 0.0
-        var max: CGFloat = 0.0
-        
-        switch component {
-        case .hour:
-            componentValue = CGFloat(components.hour ?? 0)
-            totalValue = 12.0
-            max = 24.0
-        case .minute:
-            componentValue = CGFloat(components.minute ?? 0)
-            totalValue = 60.0
-            max = 60.0
-        case .second:
-            componentValue = CGFloat(components.second ?? 0)
-            totalValue = 60.0
-            max = 60.0
-        case .nanosecond:
-            componentValue = CGFloat(components.nanosecond ?? 0)
-            totalValue = 1_000_000_000.0
-            max = 1_000_000_000.0
-        default:
-            break
-        }
-        
-        let angle = 2.0 * CGFloat.pi * (componentValue / totalValue) - CGFloat.pi / 2.0
-        let offset = 2.0 * CGFloat.pi * ((componentValue / max) / totalValue)
-        return angle + offset
-    }
-     *//////
 }
