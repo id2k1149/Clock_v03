@@ -174,7 +174,7 @@ extension UIViewController {
         let hour = CGFloat(calendar.component(.hour, from: Date()))
         let minute = CGFloat(calendar.component(.minute, from: Date()))
         let second = CGFloat(calendar.component(.second, from: Date()))
-        let nanosecond = CGFloat(calendar.component(.nanosecond, from: Date()))
+//        let nanosecond = CGFloat(calendar.component(.nanosecond, from: Date()))
         
         switch component {
         case .hour:
@@ -184,10 +184,9 @@ extension UIViewController {
             let minuteAngle = (minute + second/60.0) / 30.0 * CGFloat.pi - CGFloat.pi/2.0
             return minuteAngle
         default:
-//            let secondAngle = (second + nanosecond/1_000_000_000.0) / 30.0 * CGFloat.pi - CGFloat.pi/2.0
-            let secondProgress = CGFloat(second) + CGFloat(nanosecond) / 1_000_000_000.0
-//            let secondAngle = secondProgress / 60.0 * CGFloat.pi * 2.0 - CGFloat.pi / 2.0
-            let secondAngle = secondProgress / 30.0 * CGFloat.pi - CGFloat.pi / 2.0
+            let secondAngle = second / 30.0 * CGFloat.pi - CGFloat.pi/2.0
+//            let secondProgress = CGFloat(second) + CGFloat(nanosecond) / 1_000_000_000.0
+//            let secondAngle = secondProgress / 30.0 * CGFloat.pi - CGFloat.pi / 2.0
                
             return secondAngle
         }
