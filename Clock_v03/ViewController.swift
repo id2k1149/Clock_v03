@@ -54,10 +54,10 @@ extension UIViewController {
         for i in 0..<60 {
             let mark = UIView(frame: CGRect(origin: .zero, size: markSize))
             let angle = CGFloat(i) / 60.0 * 2.0 * CGFloat.pi - CGFloat.pi/2.0
+            mark.frame.size.height = i % 5 == 0 ? 3 : 2
             let x = cos(angle) * markRadius + circleView.frame.width/2
             let y = sin(angle) * markRadius + circleView.frame.height/2
             mark.center = CGPoint(x: x, y: y)
-            mark.frame.size.height = i % 5 == 0 ? 3 : 2
             mark.backgroundColor = i % 5 == 0 ? UIColor.red : UIColor.black
             mark.transform = CGAffineTransform(rotationAngle: angle)
             circleView.addSubview(mark)
@@ -153,7 +153,9 @@ extension UIViewController {
         circleView.layer.addSublayer(secondLayer)
         
         // Set up a timer to update the second hand every second
-        let timer = Timer(fire: Date(), interval: 1.0, repeats: true) { [self] (timer) in
+        let timer = Timer(fire: Date(),
+                          interval: 0.1,
+                          repeats: true) { [self] (timer) in
             let secondAngle = getCurrentAngle(for: .second)
             let secondEndPoint = CGPoint(x: cos(secondAngle) * secondRadius + centerPoint.x,
                                          y: sin(secondAngle) * secondRadius + centerPoint.y)
@@ -174,7 +176,7 @@ extension UIViewController {
         let hour = CGFloat(calendar.component(.hour, from: Date()))
         let minute = CGFloat(calendar.component(.minute, from: Date()))
         let second = CGFloat(calendar.component(.second, from: Date()))
-//        let nanosecond = CGFloat(calendar.component(.nanosecond, from: Date()))
+        let nanosecond = CGFloat(calendar.component(.nanosecond, from: Date()))
         
         switch component {
         case .hour:
@@ -184,10 +186,8 @@ extension UIViewController {
             let minuteAngle = (minute + second/60.0) / 30.0 * CGFloat.pi - CGFloat.pi/2.0
             return minuteAngle
         default:
-            let secondAngle = second / 30.0 * CGFloat.pi - CGFloat.pi/2.0
-//            let secondProgress = CGFloat(second) + CGFloat(nanosecond) / 1_000_000_000.0
-//            let secondAngle = secondProgress / 30.0 * CGFloat.pi - CGFloat.pi / 2.0
-               
+            let fullSeconds = CGFloat(second) + CGFloat(nanosecond) / 1_000_000_000.0
+            let secondAngle = 2 * CGFloat.pi * fullSeconds / 60 - CGFloat.pi / 2
             return secondAngle
         }
     }
